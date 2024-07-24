@@ -1,0 +1,139 @@
+@startuml
+
+/'SUBSYSTEMS'/
+component bt_manipulation_framwork_core {
+  component lifcyclenode_manager {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component bt_operator {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portin bt_operator.start_application as "start_application" #green
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+ }
+component aruco_marker_detection_skill_server {
+  component aruco_marker_publisher {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portout aruco_marker_publisher.pub_aruco_markers as "pub_aruco_markers" #blue
+    portin aruco_marker_publisher.get_image_raw as "get_image_raw" #blue
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+ }
+component moveit_skill_server {
+  component moveit_skill_server {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portin moveit_skill_server.compute_path_to_pose_skill as "compute_path_to_pose_skill" #green
+    portin moveit_skill_server.compute_path_to_point_skill as "compute_path_to_point_skill" #green
+    portin moveit_skill_server.compute_path_to_state_skill as "compute_path_to_state_skill" #green
+    portin moveit_skill_server.execute_trajectory_skill as "execute_trajectory_skill" #green
+    portin moveit_skill_server.get_current_ik_frame_pose_skill as "get_current_ik_frame_pose_skill" #green
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component moveit_config_loader {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portin moveit_config_loader.reload_parameters as "reload_parameters" #orange
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+ }
+component control_ur_gripper_via_io_skill {
+  component ur_io_control_gripper_skill_server {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+ }
+component realsense_camera_calibrated {
+  component realsence_tf_node {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component driver {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+ }
+component ur_control {
+  component robot_state_publisher_node {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component controller_manager {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component initial_joint_controller {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component initial_joint_controller_spawner_stopped {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component ur_ros2_control_node {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component dashboard_client {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component urscript_interface {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component controller_stopper {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+ }
+
+
+@enduml

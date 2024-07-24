@@ -1,0 +1,24 @@
+bt_manipulation_framwork_core:
+  nodes:
+    lifcyclenode_manager:
+      from: "nav2_lifecycle_manager.lifecycle_manager"
+      parameters:
+        - node_sequence: "lifecycle_manager::node_names"
+          value: ['bt_operator'] #RWU: need to update based skill server if it is lifecycle node, check if node sub /bond
+
+    bt_operator:
+       from: "man2_bt_operator.bt_operator"
+       interfaces:
+         - start_application: as-> "bt_operator::start_application"
+       parameters:
+         - load_bt_plugins: "bt_operator::customized_plugin_lib_names.man2_bt_skill_clients"
+           value: ['detect_aruco_marker_client',
+           'compute_path_to_state_client',
+           'compute_path_to_pose_client',
+           'compute_path_to_point_client',
+           'execute_trajectory_client',
+           'set_path_constraints_client',
+           'get_current_ik_frame_pose_client','print_value',
+           'update_pose'] #RWU:value is from skill lib, e.g. libcompute_path_to_point_client.so
+         - use_sim_time: "bt_operator::use_sim_time"
+           value: false

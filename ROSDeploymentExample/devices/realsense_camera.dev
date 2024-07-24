@@ -1,0 +1,24 @@
+DeviceType:
+  name: Realsense_camera
+  deviceResouce:
+    - name: camera_info
+      type: CameraInfomation
+      properties:
+        - name: vendor_id
+          kind: AttributeKind
+          value: "8086"
+        - name: product_id
+          kind: AttributeKind
+          value: "0b07"
+        - name: serial_number
+          kind: AttributeKind
+        - name: device_type
+          kind: AttributeKind
+        - name: device_name
+          kind: AttributeKind
+  communicationConnection:
+    - name: usb
+      type: Usb
+      properties:
+        - name: device_volume
+          kind: SelectionKind

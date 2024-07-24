@@ -1,0 +1,15 @@
+@startuml
+
+/'SUBSYSTEMS'/
+
+  component aruco_marker_publisher {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portout aruco_marker_publisher.pub_aruco_markers as "pub_aruco_markers" #blue
+    portin aruco_marker_publisher.get_image_raw as "get_image_raw" #blue
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+
+@enduml

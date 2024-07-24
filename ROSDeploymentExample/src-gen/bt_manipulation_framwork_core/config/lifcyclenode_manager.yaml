@@ -1,0 +1,4 @@
+lifcyclenode_manager:
+  ros__parameters:
+    node_sequence: [bt_operator]
+

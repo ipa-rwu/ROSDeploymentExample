@@ -1,0 +1,19 @@
+aruco_marker_detection_skill_server:
+#  fromFile: "aruco_ros/launch/marker_publisher.launch.py"
+  nodes:
+    aruco_marker_publisher:
+      from: "aruco_ros.marker_publisher"
+      interfaces:
+        - pub_aruco_markers: pub-> "marker_publisher::markers"
+        - get_image_raw: sub->"marker_publisher::image_raw"
+      parameters:
+        - camera_frame: "marker_publisher::camera_frame"
+        	value: ""
+        - reference_frame: "marker_publisher::reference_frame"
+          value: ""
+        - marker_size_arg: "marker_publisher::marker_size"
+          value: 0.0
+        - raw_image_topic: "marker_publisher::raw_image_topic"
+          value: ""
+        - camera_info_topic: "marker_publisher::camera_info_topic"
+          value: ""

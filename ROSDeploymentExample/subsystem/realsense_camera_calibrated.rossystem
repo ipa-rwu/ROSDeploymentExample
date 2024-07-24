@@ -1,0 +1,33 @@
+realsense_camera_calibrated:
+  fromFile: "realsense_camera_calibrated/launch/realsense_camera_calibrated.py"
+  nodes:
+    realsence_tf_node:
+      from: "tf2_ros.static_transform_publisher"
+      parameters:
+        - translation_x: "static_transform_publisher::translation.x"
+          value: 0.0
+        - translation_y: "static_transform_publisher::translation.y"
+          value: 0.0
+        - translation_z: "static_transform_publisher::translation.z"
+          value: 0.0
+        - rotation_x: "static_transform_publisher::rotation.x"
+          value: 0.0
+        - rotation_y: "static_transform_publisher::rotation.y"
+          value: 0.0
+        - rotation_z: "static_transform_publisher::rotation.z"
+          value: 0.0
+        - rotation_w: "static_transform_publisher::rotation.w"
+          value: 0.0
+        - child_frame_id: "static_transform_publisher::child_frame_id"
+          value: ""
+        - frame_id: "static_transform_publisher::frame_id"
+          value: ""
+    driver:
+      from: "realsense2_camera.camera"
+      parameters:
+        - camera_name: "realsense2_camera_node::camera_name"
+          value: ""
+        - device_type: "realsense2_camera_node::device_type"
+          value: ""
+        - publish_tf: "realsense2_camera_node::publish_tf"
+          value: false

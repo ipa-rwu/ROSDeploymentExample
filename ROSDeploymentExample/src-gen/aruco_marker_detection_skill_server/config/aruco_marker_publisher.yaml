@@ -1,0 +1,8 @@
+aruco_marker_publisher:
+  ros__parameters:
+    camera_frame: 
+    reference_frame: 
+    marker_size_arg: 0.0
+    raw_image_topic: 
+    camera_info_topic: 
+

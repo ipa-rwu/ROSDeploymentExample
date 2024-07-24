@@ -1,0 +1,37 @@
+man2_bt_operator:
+  fromGitRepo: "https://gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/bt_based_application_framework.git:v1.0.0"
+  artifacts:
+    bt_operator:
+      node: bt_operator
+      subscribers:
+        "bond":
+          type: "bond/msg/Status"
+      publishers:
+        "bond":
+          type: "bond/msg/Status"
+      actionservers:
+        "start_application":
+          type: "man2_msgs/action/RunApplication"
+      parameters:
+        "bond_disable_heartbeat_timeout":
+          type: Boolean
+          value: True
+        "bt_loop_duration":
+          type: Integer
+          value: 10
+        "current_bt_xml_filename":
+          type: String
+        "customized_plugin_lib_names.man2_bt_skill_clients":
+          type: Array[String]
+        "default_plugin_lib_names":
+          type: Array[String]
+          value: "[]"
+        "print_bt_status":
+          type: Boolean
+          value: False
+        "server_timeout":
+          type: Integer
+          value: 10
+        "use_sim_time":
+          type: Boolean
+          value: False

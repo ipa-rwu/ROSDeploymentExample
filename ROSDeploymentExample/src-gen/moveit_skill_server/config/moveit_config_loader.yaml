@@ -1,0 +1,5 @@
+moveit_config_loader:
+  ros__parameters:
+    robot_name: TODO
+    moveit_pkg_name: TODO
+

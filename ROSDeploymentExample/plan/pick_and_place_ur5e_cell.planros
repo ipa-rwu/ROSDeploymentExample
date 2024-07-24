@@ -1,0 +1,117 @@
+DeploymentPlanWithRos:
+  name: deploy_ur_applications
+  targetRossystem: ur_applications
+  deployTo: ur5e_cell_with_realsense_camera
+  assignment:
+    - name: bt_framework
+      executedBy: "ur5e_cell_with_realsense_camera.cmh_tower_400"
+      version: "50y_v1.0.1"
+      middleware: humble
+      softwareComponents:
+        - bt_manipulation_framwork_core:
+          executionConfiguration:
+            - refNodeParam: use_sim_time
+              value: false
+          startCommand:
+            - "ros2 launch man2_bt_bringup bringup_skills_ur5e_cell.launch.py"
+        - moveit_skill_server:
+          executionConfiguration:
+             - refNodeParam: robot_name
+               value: "ur5e_workcell"
+             - refNodeParam: moveit_pkg_name
+               value: "ur5e_cell_moveit_config"
+        - control_ur_gripper_via_io_skill
+      runtimeType:
+        type: container
+        registry: "registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo"
+
+    - name: launch_realsense
+      executedBy: "ur5e_cell_with_realsense_camera.cmh_tower_400"
+      version: "50y_v1.0.1"
+      middleware: humble
+      softwareComponents:
+        - realsense_camera_calibrated:
+          executionConfiguration:
+            - refNodeParam: camera_name
+              to: "ur5e_cell_with_realsense_camera.camera_realsense.device_name"
+            - refNodeParam: device_type
+              to: "ur5e_cell_with_realsense_camera.camera_realsense.device_type"
+            - refNodeParam: frame_id
+              value: "tool0"
+            - refNodeParam: child_frame_id
+              value: "camera_link"
+            - refNodeParam: translation_x
+              value: -0.00640796
+            - refNodeParam: translation_y
+              value: -0.0551158
+            - refNodeParam: translation_z
+              value: 0.00796752
+            - refNodeParam: rotation_x
+              value: -0.529877
+            - refNodeParam: rotation_y
+              value: 0.53423
+            - refNodeParam: rotation_z
+              value: -0.467606
+            - refNodeParam: rotation_w
+              value: -0.463867
+          startCommand:
+            - "ros2 launch realsense_camera_calibrated realsense_camera_calibrated.launch.py"
+      runtimeType:
+        type: container
+        registry: "registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo"
+
+    - name: aruco_marker_publish
+      executedBy: "ur5e_cell_with_realsense_camera.cmh_tower_400"
+      version: "50y_v1.0.1"
+      middleware: humble
+      softwareComponents:
+        - aruco_marker_detection_skill_server:
+          executionConfiguration:
+            - refNodeParam: camera_frame
+              value: "camera_color_optical_frame"
+            - refNodeParam: marker_size_arg
+              value: 0.02
+            - refNodeParam: reference_frame
+              value: "world"
+            - refNodeParam: raw_image_topic
+              value: "camera/color/image_raw"
+            - refNodeParam: camera_info_topic
+              value: "camera/color/info"
+          startCommand:
+            - "ros2 launch aruco_ros mock_aruco_marker_pub.launch.py"
+      runtimeType:
+        type: container
+        registry: "registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo"
+
+    - name: ur_driver
+      executedBy: "ur5e_cell_with_realsense_camera.cmh_tower_400"
+      version: "50y_v1.0.1"
+      middleware: humble
+      softwareComponents:
+        - ur_control:
+          executionConfiguration:
+            - refSysParam: ur_type
+              to: "ur5e_cell_with_realsense_camera.arm.device_type"
+            - refSysParam: robot_ip
+              value: "192.168.56.2"
+            - refSysParam: activate_joint_controller
+              value: true
+            - refSysParam: initial_joint_controller
+              value: "joint_trajectory_controller"
+            - refSysParam: use_fake_hardware
+              value: false
+          startCommand:
+            - "ros2 launch ur_robot_driver ur_control.launch.py"
+      runtimeType:
+        type: container
+        registry: "registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo"
+        resource:
+          - name: operting_system
+            type: LinuxOpertingSystem
+            properties:
+              - name: os_name
+                kind: AttributeKind
+                value: ubuntu
+              - name: os_version
+                    kind: AttributeKind
+                    value: jammy

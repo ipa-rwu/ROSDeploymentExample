@@ -1,0 +1,50 @@
+ComputationDeviceType:
+  name: PC
+  computationResouce:
+    - name: operting_system
+      type: LinuxOpertingSystem
+      properties:
+        - name: os_name
+          kind: AttributeKind
+        - name: os_version
+          kind: AttributeKind
+
+    - name: processor
+      type: Processor
+      properties:
+        - name: core_number
+          kind: AttributeKind
+        - name: processor_architecture
+          kind: AttributeKind
+
+  communicationConnection:
+    - name: ethernet
+      type: Ethernet
+      properties:
+        - name: ip_address
+          kind: AttributeKind
+        - name: interface_name
+          kind: AttributeKind
+        - name: mac_address
+          kind: AttributeKind
+        - name: identity_name
+          kind: AttributeKind
+        - name: port
+          kind: AttributeKind
+        - name: gateway
+          kind: AttributeKind
+        - name: subnet_mask
+          kind: AttributeKind
+        - name: dns_server
+          kind: SelectionKind
+    - name: usb_01
+      type: Usb
+      properties:
+        - name: device_volume
+          kind: SelectionKind
+
+    - name: usb_02
+      type: Usb
+      properties:
+        - name: device_volume
+          kind: SelectionKind

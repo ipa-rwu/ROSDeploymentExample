@@ -1,0 +1,5 @@
+DeviceType:
+  name: EGP50
+  communicationConnection:
+    - name: io
+      type: IO

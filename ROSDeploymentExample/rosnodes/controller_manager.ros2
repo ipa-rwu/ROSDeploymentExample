@@ -1,0 +1,36 @@
+controller_manager:
+  artifacts:
+    spawner: # change to executor name
+      node: controller_manager
+      serviceservers:
+        "configure_controller":
+          type: "controller_manager_msgs/srv/ConfigureController"
+        "list_controller_types":
+          type: "controller_manager_msgs/srv/ListControllerTypes"
+        "list_controllers":
+          type: "controller_manager_msgs/srv/ListControllers"
+        "list_hardware_components":
+          type: "controller_manager_msgs/srv/ListHardwareComponents"
+        "list_hardware_interfaces":
+          type: "controller_manager_msgs/srv/ListHardwareInterfaces"
+        "load_controller":
+          type: "controller_manager_msgs/srv/LoadController"
+        "reload_controller_libraries":
+          type: "controller_manager_msgs/srv/ReloadControllerLibraries"
+        "set_hardware_component_state":
+          type: "controller_manager_msgs/srv/SetHardwareComponentState"
+        "switch_controller":
+          type: "controller_manager_msgs/srv/SwitchController"
+        "unload_controller":
+          type: "controller_manager_msgs/srv/UnloadController"
+      parameters:
+        "robot_description":
+          type: String
+        "update_rate":
+          type: Integer
+          value: 500
+        "use_sim_time":
+          type: Boolean
+          value: False
+    ros2_control_node:
+        node: ros2_control_node

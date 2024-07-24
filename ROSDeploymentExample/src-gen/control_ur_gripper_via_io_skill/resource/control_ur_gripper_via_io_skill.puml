@@ -1,0 +1,13 @@
+@startuml
+
+/'SUBSYSTEMS'/
+
+  component ur_io_control_gripper_skill_server {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+
+@enduml

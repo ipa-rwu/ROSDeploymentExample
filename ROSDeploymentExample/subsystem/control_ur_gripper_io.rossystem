@@ -1,0 +1,7 @@
+control_ur_gripper_via_io_skill:
+  nodes:
+  	ur_io_control_gripper_skill_server: # This is a managed node
+  	  from: "ur_io_control_gripper_skill.ur_io_control_gripper_action_server"
+#  	  parameters:
+#  	    - io_server_name: "ur_io_control_gripper_action_server::io_service_name"
+#  	      value: "/set_io"

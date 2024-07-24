@@ -1,0 +1,8 @@
+ur_robot_driver:
+  fromGitRepo: "https://github.com/UniversalRobots/Universal_Robots_ROS2_Driver"
+  artifacts:
+    urscript_interface:
+      node: urscript_interface
+      parameters:
+        "robot_ip":
+          type: String

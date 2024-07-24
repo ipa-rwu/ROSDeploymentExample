@@ -1,0 +1,36 @@
+DeviceType:
+  name: UR5E
+  deviceResouce:
+    - name: device_info
+      type: DeviceInfomation
+      properties:
+        - name: type
+          kind: AttributeKind
+          value: ur5e
+  communicationConnection:
+    - name: io_tip
+      type: IO
+      properties:
+        - name: pin_dio_0
+          kind: AttributeKind
+          value: 0
+        - name: pin_dio_1
+          kind: AttributeKind
+
+    - name: ethernet
+      type: Ethernet
+      properties:
+        - name: ip_address
+          kind: AttributeKind
+        - name: interface_name
+          kind: AttributeKind
+        - name: mac_address
+          kind: AttributeKind
+        - name: identity_name
+          kind: AttributeKind
+        - name: gateway
+          kind: AttributeKind
+        - name: subnet_mask
+          kind: AttributeKind
+        - name: dns_server
+          kind: SelectionKind

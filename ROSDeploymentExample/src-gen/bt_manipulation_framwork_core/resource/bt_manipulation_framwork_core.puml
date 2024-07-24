@@ -1,0 +1,21 @@
+@startuml
+
+/'SUBSYSTEMS'/
+
+  component lifcyclenode_manager {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component bt_operator {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portin bt_operator.start_application as "start_application" #green
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+
+@enduml

@@ -1,0 +1,76 @@
+moveit_skills:
+  msgs:
+    ComputePathResult
+      message
+        uint16 error_code_id
+        'moveit_msgs/msg/RobotTrajectory'[] trajectory
+    PlanConfig
+      message
+        string planning_pipeline
+        string planner_id
+        'moveit_msgs/msg/Constraints'[] path_constraints
+        string ik_frame
+
+  srvs:
+    SetPathConstrains
+      request
+        string file_path
+      response
+        'moveit_msgs/msg/Constraints'[] path_constraints
+        uint16 error_code_id
+
+  actions:
+    ComputePathToPose
+      goal
+        string target_group
+        'geometry_msgs/msg/PoseStamped'[] target_pose
+        'moveit_skills/msg/PlanConfig'[] config
+      result
+        'moveit_skills/msg/ComputePathResult'[] plan_result
+      feedback
+    GetCurrentIKFramePose
+      goal
+        string group_name
+        string ik_frame
+      result
+        uint16 error_code_id
+        'geometry_msgs/msg/Pose'[] pose
+      feedback
+    ComputePathToPoint
+      goal
+        string target_group
+        'geometry_msgs/msg/PointStamped'[] target_point
+        'moveit_skills/msg/PlanConfig'[] config
+      result
+        'moveit_skills/msg/ComputePathResult'[] plan_result
+      feedback
+    ComputePathToState
+      goal
+        string target_group
+        string named_state
+        'moveit_skills/msg/PlanConfig'[] config
+      result
+        'moveit_skills/msg/ComputePathResult'[] plan_result
+      feedback
+    ExecuteTrajectory
+      goal
+        string target_group
+        'moveit_msgs/msg/RobotTrajectory'[] trajectory
+      result
+        uint16 error_code_id
+      feedback
+    IOGripperCommand
+      goal
+        int8 open_high_pin
+        int8 close_high_pin
+        string io_service_server_name
+        bool open # true: open, false close
+        int16 timeout # timeout for connecting IO server
+      result
+        uint16 UNKNOWN=720
+        uint16 EXECUTE_FAILED=721
+        uint16 SERVER_TIMEOUT=722
+        uint16 NONE=0
+        uint16 error_code_id
+      feedback
+        bool open # current state true: open, false close

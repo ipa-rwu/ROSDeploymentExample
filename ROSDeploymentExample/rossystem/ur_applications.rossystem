@@ -1,0 +1,24 @@
+ur_applications:
+  subSystems:
+    bt_manipulation_framwork_core    
+    aruco_marker_detection_skill_server
+    moveit_skill_server
+    control_ur_gripper_via_io_skill
+    realsense_camera_calibrated
+    ur_control
+  parameters:
+    "lifcyclenode_manager/node_sequence":
+    	type: Array[String]
+    	value: ['moveit_config_server', 'bt_operator', 'ur_io_control_gripper_skill_server', 'moveit_skill_server']
+    "bt_operator/customized_plugin_lib_names.ur_robot_skill_clients":
+      type: Array[String]
+      value: ['io_control_gripper', 'get_ur_robot_state', 'get_ur_safety_state', 'get_ur_program_state', 'check_safety_mode', 'check_robot_mode', 'is_robot_running', 'is_safety_normal', 'is_program_running']
+    "bt_operator/default_plugin_lib_names":
+      type: Array[String]
+      value: ['util_plugin_print_value']
+    "moveit_config_server/robot_name":
+      type: String
+      value: "ur5e_workcell"
+    "moveit_config_server/moveit_config_pkg":
+      type: String
+      value: "ur5e_cell_moveit_config"

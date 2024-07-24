@@ -1,0 +1,26 @@
+@startuml
+
+/'SUBSYSTEMS'/
+
+  component moveit_skill_server {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portin moveit_skill_server.compute_path_to_pose_skill as "compute_path_to_pose_skill" #green
+    portin moveit_skill_server.compute_path_to_point_skill as "compute_path_to_point_skill" #green
+    portin moveit_skill_server.compute_path_to_state_skill as "compute_path_to_state_skill" #green
+    portin moveit_skill_server.execute_trajectory_skill as "execute_trajectory_skill" #green
+    portin moveit_skill_server.get_current_ik_frame_pose_skill as "get_current_ik_frame_pose_skill" #green
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+  component moveit_config_loader {
+
+/' PORTS DEFINED AS AVAILABLE IN THE ROSSYSTEM FILE '/
+    portin moveit_config_loader.reload_parameters as "reload_parameters" #orange
+
+/' PORTS FROM THE ORIGINAL NODE '/
+  }
+
+
+@enduml

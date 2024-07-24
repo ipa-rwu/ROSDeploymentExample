@@ -1,0 +1,24 @@
+DeviceType:
+  name: PRBT
+  deviceResouce:
+    - name: device_info
+      type: DeviceInfomation
+      properties:
+        - name: type
+          kind: AttributeKind
+  communicationConnection:
+    - name: io_tip
+      type: IO
+      properties:
+        - name: pin_dio_0
+          kind: AttributeKind
+          value: 0
+        - name: pin_dio_1
+          kind: AttributeKind
+
+    - name: can
+      type: CAN
+      properties:
+        - name: can_interface_name
+          kind: AttributeKind
+          value: can0

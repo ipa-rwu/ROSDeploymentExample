@@ -1,0 +1,15 @@
+moveit_skills:
+  fromGitRepo: "https://gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/bt_based_application_framework.git"
+  artifacts:
+     set_path_constrains: # change to executor name
+      node: set_path_constrains_server
+      serviceservers:
+        "set_path_constrains":
+          type: "moveit_skills/srv/SetPathConstrains"
+      parameters:
+        "bond_disable_heartbeat_timeout":
+          type: Boolean
+          value: True
+        "use_sim_time":
+          type: Boolean
+          value: False

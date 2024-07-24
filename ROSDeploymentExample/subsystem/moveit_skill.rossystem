@@ -1,0 +1,65 @@
+moveit_skill_server:
+  nodes:
+    moveit_skill_server:
+      from: "moveit_skills.moveit_skill_server"
+      interfaces:
+        - compute_path_to_pose_skill: as-> "moveit_skill_server_node::compute_path_to_pose" # server name need to be defined in the skill
+        - compute_path_to_point_skill: as-> "moveit_skill_server_node::compute_path_to_point"
+        - compute_path_to_state_skill: as-> "moveit_skill_server_node::compute_path_to_state"
+        - execute_trajectory_skill: as-> "moveit_skill_server_node::execute_trajectory"
+        - get_current_ik_frame_pose_skill: as-> "moveit_skill_server_node::get_current_ik_frame_pose"
+        # - set_path_constrains_action: ss-> "set_path_constrains::set_path_constrains" # RWU: cehck if we still use this
+      parameters:
+        - use_sim_time: "moveit_skill_server_node::use_sim_time"
+          value: false
+        - plan_request_params_planning_pipeline: "moveit_skill_server_node::plan_request_params.planning_pipeline"
+          value: pilz_industrial_motion_planner
+        - plan_request_params_planner_id: "moveit_skill_server_node::plan_request_params.planner_id"
+          value: PTP
+        - plan_request_params_planning_attempts: "moveit_skill_server_node::plan_request_params.planning_attempts"
+          value: 10
+        - step_size: "moveit_skill_server_node::step_size"
+          value: 0.005
+        - min_fraction: "moveit_skill_server_node::min_fraction"
+          value: 0.50
+        - max_acceleration_scaling_factor: "moveit_skill_server_node::plan_request_params.max_acceleration_scaling_factor"
+          value: 0.1
+        - planning_time: "moveit_skill_server_node::planning_time"
+          value: 1.0
+        - planning_pipelines_pipeline_names: "moveit_skill_server_node::planning_pipelines.pipeline_names"
+          value: ["ompl", "pilz_industrial_motion_planner"]
+        - planning_scene_monitor_options_name: "moveit_skill_server_node::planning_scene_monitor_options.name"
+          value: "planning_scene_monitor"
+        - planning_scene_monitor_options_robot_description: "moveit_skill_server_node::planning_scene_monitor_options.robot_description"
+          value: "robot_description"
+        - planning_scene_monitor_options_joint_state_topic: "moveit_skill_server_node::planning_scene_monitor_options.joint_state_topic"
+          value: "/joint_states"                            
+        - planning_scene_monitor_options_attached_collision_object_topic: "moveit_skill_server_node::planning_scene_monitor_options.attached_collision_object_topic"
+          value: "/moveit_cpp/planning_scene_monitor"
+        - planning_scene_monitor_options_publish_planning_scene_topic: "moveit_skill_server_node::planning_scene_monitor_options.publish_planning_scene_topic"
+          value: "/moveit_cpp/publish_planning_scene"
+        - planning_scene_monitor_options_monitored_planning_scene_topic: "moveit_skill_server_node::planning_scene_monitor_options.monitored_planning_scene_topic"
+          value: "/moveit_cpp/monitored_planning_scene"
+        - planning_scene_monitor_options_wait_for_initial_state_timeout: "moveit_skill_server_node::planning_scene_monitor_options.wait_for_initial_state_timeout"
+          value: 10.0
+        - moveit_simple_controller_manager_controller_names: "moveit_skill_server_node::moveit_simple_controller_manager.controller_names"
+          value: ["joint_trajectory_controller"]
+        - moveit_simple_controller_joint_trajectory_controller_type: "moveit_skill_server_node::moveit_simple_controller_manager.joint_trajectory_controller.type"
+          value: FollowJointTrajectory
+        - moveit_simple_controller_joint_trajectory_controller_action_ns: "moveit_skill_server_node::moveit_simple_controller_manager.joint_trajectory_controller.action_ns"
+          value: follow_joint_trajectory
+        - moveit_simple_controller_joint_trajectory_controller_default: "moveit_skill_server_node::moveit_simple_controller_manager.joint_trajectory_controller.default"
+          value: true
+        - wait_server_timeout_seconds: "moveit_skill_server_node::wait_server_timeout"
+          value: 10
+		
+    moveit_config_loader:
+      from: "moveit_skills.moveit_config_server"
+      interfaces: 
+        - reload_parameters: ss->"moveit_config_server::reload_parameters"
+      parameters:
+		  	- robot_name: "moveit_config_server::robot_name"
+		  	  value: "TODO" # RWU: need to be define based on which robot we will use
+		  	- moveit_pkg_name: "moveit_config_server::moveit_config_pkg"
+		  	  value: "TODO" # RWU: need to be define based on which robot we will use
+    

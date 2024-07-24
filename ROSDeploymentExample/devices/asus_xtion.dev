@@ -1,0 +1,20 @@
+DeviceType:
+  name: Asus_xtion
+  deviceResouce:
+    - name: camera_info
+      type: CameraInfomation
+      properties:
+        - name: vendor_id
+          kind: AttributeKind
+          value: "1d27"
+        - name: product_id
+          kind: AttributeKind
+          value: "0601"
+        - name: device_type
+          kind: AttributeKind
+  communicationConnection:
+    - name: usb
+      type: Usb
+      properties:
+        - name: device_volume
+          kind: SelectionKind

@@ -1,0 +1,5 @@
+bt_operator:
+  ros__parameters:
+    load_bt_plugins: [detect_aruco_marker_client, compute_path_to_state_client, compute_path_to_pose_client, compute_path_to_point_client, execute_trajectory_client, set_path_constraints_client, get_current_ik_frame_pose_client, print_value, update_pose]
+    use_sim_time: false
+

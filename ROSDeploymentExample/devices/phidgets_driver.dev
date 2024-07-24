@@ -1,0 +1,16 @@
+DeviceType:
+  name: PhidgetsDrievr
+  communicationConnection:
+    - name: io
+      type: IO
+      properties:
+        - name: pin_dio_0
+          kind: AttributeKind
+          value: 0
+        - name: pin_dio_1
+          kind: AttributeKind
+    - name: usb
+      type: Usb
+      properties:
+        - name: device_volume
+          kind: SelectionKind
