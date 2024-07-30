@@ -1,0 +1,9 @@
+- name: deploy_ur_applications_cmh_tower_400
+  hosts: cmh_tower_400
+  vars:
+    docker_compose_dir: cmh_tower_400
+    ori_docker_compose_dir_path: "../{{ docker_compose_dir }}"
+    dest_docker_compose_dir_path: "/home/{{ ansible_user }}/AutoDeployment/deploy_ur_applications/{{ docker_compose_dir }}"
+  roles:
+    - common
+    - start_components

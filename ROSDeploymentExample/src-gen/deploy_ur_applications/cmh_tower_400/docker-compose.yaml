@@ -1,0 +1,109 @@
+version: '3'
+networks:
+  ros-network:
+    external: false
+    driver: "bridge"
+  ur5e:
+    driver: bridge
+    driver_opts:
+      parent: eno1
+
+services:
+  bt_framework:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/bt_framework_humble:50y_v1.0.1
+    volumes:
+      - ./cyclonedds.xml:/cyclonedds.xml
+    networks:
+      - ros-network
+    environment:
+      - NETINTERFACE=eth0
+      # for application
+      - robot_name=ur5e_workcell
+      - use_sim_time=false
+      - moveit_pkg_name=ur5e_cell_moveit_config
+    command:
+      - bash
+      - -c
+      - |
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        source /ros_entrypoint.sh
+        ros2 launch man2_bt_bringup bringup_skills_ur5e_cell.launch.py use_sim_time:=false 
+  launch_realsense:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/launch_realsense_humble:50y_v1.0.1
+    volumes:
+      - ./cyclonedds.xml:/cyclonedds.xml
+    networks:
+      - ros-network
+    devices:
+      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video1
+      - /dev/video2:/dev/video2
+      - /dev/video3:/dev/video3
+      - /dev/video4:/dev/video4
+      - /dev/video5:/dev/video5
+    environment:
+      - NETINTERFACE=eth0
+      # for application
+      - translation_y=-0.0551158
+      - translation_z=0.00796752
+      - frame_id=tool0
+      - child_frame_id=camera_link
+      - camera_name=camera
+      - rotation_z=-0.467606
+      - rotation_x=-0.529877
+      - device_type=d435
+      - rotation_w=-0.463867
+      - rotation_y=0.53423
+      - translation_x=-0.00640796
+    command:
+      - bash
+      - -c
+      - |
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        source /ros_entrypoint.sh
+        ros2 launch realsense_camera_calibrated realsense_camera_calibrated.launch.py translation_y:=-0.0551158 translation_z:=0.00796752 frame_id:=tool0 child_frame_id:=camera_link camera_name:=camera rotation_z:=-0.467606 rotation_x:=-0.529877 device_type:=d435 rotation_w:=-0.463867 rotation_y:=0.53423 translation_x:=-0.00640796 
+  aruco_marker_publish:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/aruco_marker_publish_humble:50y_v1.0.1
+    volumes:
+      - ./cyclonedds.xml:/cyclonedds.xml
+    networks:
+      - ros-network
+    environment:
+      - NETINTERFACE=eth0
+      # for application
+      - camera_frame=camera_color_optical_frame
+      - camera_info_topic=camera/color/info
+      - raw_image_topic=camera/color/image_raw
+      - reference_frame=world
+      - marker_size_arg=0.02
+    command:
+      - bash
+      - -c
+      - |
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        source /ros_entrypoint.sh
+        ros2 launch aruco_ros mock_aruco_marker_pub.launch.py camera_frame:=camera_color_optical_frame camera_info_topic:=camera/color/info raw_image_topic:=camera/color/image_raw reference_frame:=world marker_size_arg:=0.02 
+  ur_driver:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/ur_driver_humble:50y_v1.0.1
+    volumes:
+      - ./cyclonedds.xml:/cyclonedds.xml
+    networks:
+      - ros-network
+      - ur5e
+    ports:
+      - 50002:50002
+    environment:
+      - NETINTERFACE=eth0
+      # for application
+      - initial_joint_controller=joint_trajectory_controller
+      - robot_ip=192.168.56.2
+      - ur_type=ur5e
+      - use_fake_hardware=false
+      - activate_joint_controller=true
+    command:
+      - bash
+      - -c
+      - |
+        export CYCLONEDDS_URI=file:///cyclonedds.xml
+        source /ros_entrypoint.sh
+        ros2 launch ur_robot_driver ur_control.launch.py initial_joint_controller:=joint_trajectory_controller robot_ip:=192.168.56.2 ur_type:=ur5e use_fake_hardware:=false activate_joint_controller:=true 

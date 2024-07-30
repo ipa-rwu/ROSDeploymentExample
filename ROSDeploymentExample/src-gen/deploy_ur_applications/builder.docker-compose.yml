@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+  bt_framework:
+    image: bt_framework_humble:latest
+    build:
+      context: "./bt_framework/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        ROSINSTALL_CI_JOB_TOKEN: true
+        CI_JOB_TOKEN: # Please define CI_JOB_TOKEN that can access the following repos: [https://gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/bt_based_application_framework.git]
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+
+  launch_realsense:
+    image: launch_realsense_humble:latest
+    build:
+      context: "./launch_realsense/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+
+  aruco_marker_publish:
+    image: aruco_marker_publish_humble:latest
+    build:
+      context: "./aruco_marker_publish/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+
+  ur_driver:
+    image: ur_driver_humble:latest
+    build:
+      context: "./ur_driver/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+

@@ -1,0 +1,244 @@
+include:
+  - local: src-gen/deploy_ur_applications/gitlab/ci/gitlab_templates/JOB_TEMPLATE.yml
+  - local: src-gen/deploy_ur_applications/gitlab/ci/gitlab_templates/RULES.yml
+
+variables:
+  ROSINSTALL_CI_JOB_TOKEN: "true"
+
+.common:
+  tags: &kaniko_runner
+    - todo
+
+bt_framework:
+  tags: *kaniko_runner
+  stage: build
+  before_script:
+    # use "export" to overide global variables
+    - export BASE_IMAGE_PREFIX="public.ecr.aws/docker/library/ros"
+    - export BASE_IMAGE_SUFFIX="humble-ros-core"
+    - echo BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX}
+    - echo BASE_IMAGE_SUFFIX=${BASE_IMAGE_SUFFIX}
+    - echo "IMAGE_NAME=${IMAGE_NAME}"
+    - !reference [.common, setup_image_tag_script]
+    - !reference [.common, setup_base_image_script]
+    - echo "DOCKERFILE_FOLDER=${DOCKERFILE_FOLDER}"
+    - echo "DOCKERFILE_NAME=${DOCKERFILE_NAME}"
+    - echo "SELECT_PKGS=${SELECT_PKGS}"
+    - echo "CMAKE_ARGS=${CMAKE_ARGS}"
+    - echo "COLCON_OPTION=${COLCON_OPTION}"
+    - export BUILDER_SUFFIX=$BUILDER_SUFFIX
+    - export STAGE=$STAGE
+  extends:
+    - .build_with_kaniko
+    - .on_always
+  variables:
+    IMAGE_NAME: "bt_framework_humble"
+    DOCKERFILE_FOLDER: "src-gen/deploy_ur_applications/bt_framework/"
+    BASE_IMAGE_PREFIX: "public.ecr.aws/docker/library/ros"
+    BASE_IMAGE_SUFFIX: "humble-ros-core"
+    DOCKERFILE_NAME: Dockerfile
+    SELECT_PKGS: ""
+    COLCON_OPTION: ""
+    BUILDER_SUFFIX: ":0.0.3"
+  rules:
+    - !reference [.rules-map, on_commit_merge]
+
+publish_bt_framework:
+  tags: *kaniko_runner
+  stage: publish
+  before_script:
+      - !reference [.common, create_release_tag_script]
+  extends:
+    - .publish
+    # - .on_merge_tag
+  variables:
+    IMAGE_NAME: "bt_framework_humble"
+  rules:
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG != null || $CI_COMMIT_BRANCH == $CUSTOME_DEFAULT_BRANCH
+        needs:
+          - bt_framework
+launch_realsense:
+  tags: *kaniko_runner
+  stage: build
+  before_script:
+    # use "export" to overide global variables
+    - export BASE_IMAGE_PREFIX="public.ecr.aws/docker/library/ros"
+    - export BASE_IMAGE_SUFFIX="humble-ros-core"
+    - echo BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX}
+    - echo BASE_IMAGE_SUFFIX=${BASE_IMAGE_SUFFIX}
+    - echo "IMAGE_NAME=${IMAGE_NAME}"
+    - !reference [.common, setup_image_tag_script]
+    - !reference [.common, setup_base_image_script]
+    - echo "DOCKERFILE_FOLDER=${DOCKERFILE_FOLDER}"
+    - echo "DOCKERFILE_NAME=${DOCKERFILE_NAME}"
+    - echo "SELECT_PKGS=${SELECT_PKGS}"
+    - echo "CMAKE_ARGS=${CMAKE_ARGS}"
+    - echo "COLCON_OPTION=${COLCON_OPTION}"
+    - export BUILDER_SUFFIX=$BUILDER_SUFFIX
+    - export STAGE=$STAGE
+  extends:
+    - .build_with_kaniko
+    - .on_always
+  variables:
+    IMAGE_NAME: "launch_realsense_humble"
+    DOCKERFILE_FOLDER: "src-gen/deploy_ur_applications/launch_realsense/"
+    BASE_IMAGE_PREFIX: "public.ecr.aws/docker/library/ros"
+    BASE_IMAGE_SUFFIX: "humble-ros-core"
+    DOCKERFILE_NAME: Dockerfile
+    SELECT_PKGS: ""
+    COLCON_OPTION: ""
+    BUILDER_SUFFIX: ":0.0.3"
+  rules:
+    - !reference [.rules-map, on_commit_merge]
+
+publish_launch_realsense:
+  tags: *kaniko_runner
+  stage: publish
+  before_script:
+      - !reference [.common, create_release_tag_script]
+  extends:
+    - .publish
+    # - .on_merge_tag
+  variables:
+    IMAGE_NAME: "launch_realsense_humble"
+  rules:
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG != null || $CI_COMMIT_BRANCH == $CUSTOME_DEFAULT_BRANCH
+        needs:
+          - launch_realsense
+aruco_marker_publish:
+  tags: *kaniko_runner
+  stage: build
+  before_script:
+    # use "export" to overide global variables
+    - export BASE_IMAGE_PREFIX="public.ecr.aws/docker/library/ros"
+    - export BASE_IMAGE_SUFFIX="humble-ros-core"
+    - echo BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX}
+    - echo BASE_IMAGE_SUFFIX=${BASE_IMAGE_SUFFIX}
+    - echo "IMAGE_NAME=${IMAGE_NAME}"
+    - !reference [.common, setup_image_tag_script]
+    - !reference [.common, setup_base_image_script]
+    - echo "DOCKERFILE_FOLDER=${DOCKERFILE_FOLDER}"
+    - echo "DOCKERFILE_NAME=${DOCKERFILE_NAME}"
+    - echo "SELECT_PKGS=${SELECT_PKGS}"
+    - echo "CMAKE_ARGS=${CMAKE_ARGS}"
+    - echo "COLCON_OPTION=${COLCON_OPTION}"
+    - export BUILDER_SUFFIX=$BUILDER_SUFFIX
+    - export STAGE=$STAGE
+  extends:
+    - .build_with_kaniko
+    - .on_always
+  variables:
+    IMAGE_NAME: "aruco_marker_publish_humble"
+    DOCKERFILE_FOLDER: "src-gen/deploy_ur_applications/aruco_marker_publish/"
+    BASE_IMAGE_PREFIX: "public.ecr.aws/docker/library/ros"
+    BASE_IMAGE_SUFFIX: "humble-ros-core"
+    DOCKERFILE_NAME: Dockerfile
+    SELECT_PKGS: ""
+    COLCON_OPTION: ""
+    BUILDER_SUFFIX: ":0.0.3"
+  rules:
+    - !reference [.rules-map, on_commit_merge]
+
+publish_aruco_marker_publish:
+  tags: *kaniko_runner
+  stage: publish
+  before_script:
+      - !reference [.common, create_release_tag_script]
+  extends:
+    - .publish
+    # - .on_merge_tag
+  variables:
+    IMAGE_NAME: "aruco_marker_publish_humble"
+  rules:
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG != null || $CI_COMMIT_BRANCH == $CUSTOME_DEFAULT_BRANCH
+        needs:
+          - aruco_marker_publish
+ur_driver:
+  tags: *kaniko_runner
+  stage: build
+  before_script:
+    # use "export" to overide global variables
+    - export BASE_IMAGE_PREFIX="public.ecr.aws/docker/library/ros"
+    - export BASE_IMAGE_SUFFIX="humble-ros-core"
+    - echo BASE_IMAGE_PREFIX=${BASE_IMAGE_PREFIX}
+    - echo BASE_IMAGE_SUFFIX=${BASE_IMAGE_SUFFIX}
+    - echo "IMAGE_NAME=${IMAGE_NAME}"
+    - !reference [.common, setup_image_tag_script]
+    - !reference [.common, setup_base_image_script]
+    - echo "DOCKERFILE_FOLDER=${DOCKERFILE_FOLDER}"
+    - echo "DOCKERFILE_NAME=${DOCKERFILE_NAME}"
+    - echo "SELECT_PKGS=${SELECT_PKGS}"
+    - echo "CMAKE_ARGS=${CMAKE_ARGS}"
+    - echo "COLCON_OPTION=${COLCON_OPTION}"
+    - export BUILDER_SUFFIX=$BUILDER_SUFFIX
+    - export STAGE=$STAGE
+  extends:
+    - .build_with_kaniko
+    - .on_always
+  variables:
+    IMAGE_NAME: "ur_driver_humble"
+    DOCKERFILE_FOLDER: "src-gen/deploy_ur_applications/ur_driver/"
+    BASE_IMAGE_PREFIX: "public.ecr.aws/docker/library/ros"
+    BASE_IMAGE_SUFFIX: "humble-ros-core"
+    DOCKERFILE_NAME: Dockerfile
+    SELECT_PKGS: ""
+    COLCON_OPTION: ""
+    BUILDER_SUFFIX: ":0.0.3"
+  rules:
+    - !reference [.rules-map, on_commit_merge]
+
+publish_ur_driver:
+  tags: *kaniko_runner
+  stage: publish
+  before_script:
+      - !reference [.common, create_release_tag_script]
+  extends:
+    - .publish
+    # - .on_merge_tag
+  variables:
+    IMAGE_NAME: "ur_driver_humble"
+  rules:
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG != null || $CI_COMMIT_BRANCH == $CUSTOME_DEFAULT_BRANCH
+        needs:
+          - ur_driver
+
+doc:
+  tags: *kaniko_runner
+  stage: doc
+  extends:
+    - .sphinxdoc
+    - .on_doc_change
+    - .on_merge_tag
+  variables:
+    DOC_PATH: "src-gen/deploy_ur_applications/doc/source"
+
+ansible_deploy:
+  tags:
+    - cmh_tower_400
+  stage: ansible_deploy
+  before_script:
+    - "command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )"
+    - eval $(ssh-agent -s)
+    - chmod 400 "$SSH_PRIVATE_KEY_CMH_TOWER_400"
+    - ssh-add "$SSH_PRIVATE_KEY_CMH_TOWER_400"
+
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+    - apk add ansible -v
+  script:
+    - cd src-gen/deploy_ur_applications/ansible
+    - ansible-playbook -i inventory_ci.yaml --private-key "$SSH_PRIVATE_KEY_CMH_TOWER_400" playbook_deploy_files.yaml
+  variables:
+    ANSIBLE_HOST_KEY_CHECKING: "False"
+  extends:
+    - .on_merge_tag
+  when: manual
+
+stages:
+  - ansible_deploy
+  - build
+  - publish
+  - doc
