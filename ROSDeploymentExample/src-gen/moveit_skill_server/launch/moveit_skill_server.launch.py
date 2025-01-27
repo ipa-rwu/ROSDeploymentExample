@@ -7,7 +7,7 @@ from launch.substitutions import LaunchConfiguration, PythonExpression, PathJoin
 
 def generate_launch_description():
   ld = LaunchDescription()
-  
+
   # *** PARAMETERS ***
   moveit_skill_server_config = os.path.join(
     get_package_share_directory('moveit_skill_server'),

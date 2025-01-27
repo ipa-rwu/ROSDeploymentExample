@@ -6,7 +6,7 @@ from launch.substitutions import LaunchConfiguration, PythonExpression, PathJoin
 
 def generate_launch_description():
   ld = LaunchDescription()
-  
+
   # *** PARAMETERS ***
 
   # *** ROS 2 nodes ***

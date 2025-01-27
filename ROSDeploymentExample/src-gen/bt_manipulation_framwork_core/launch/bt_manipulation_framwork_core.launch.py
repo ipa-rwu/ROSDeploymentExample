@@ -6,7 +6,7 @@ from launch.substitutions import LaunchConfiguration, PythonExpression, PathJoin
 
 def generate_launch_description():
   ld = LaunchDescription()
-  
+
   # *** PARAMETERS ***
   node_sequence_arg = DeclareLaunchArgument(
     "node_sequence", default_value=TextSubstitution(text="[bt_operator]")

@@ -1,6 +1,0 @@
-repositories:
-  aruco_ros:
-    type: git
-    url: https://github.com/ipa-rwu/aruco_ros.git
-    version: humble-devel
-  
