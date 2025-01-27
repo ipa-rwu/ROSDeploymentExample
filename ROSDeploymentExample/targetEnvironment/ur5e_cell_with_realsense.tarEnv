@@ -2,7 +2,7 @@ TargetDeployEnviroment:
   name: ur5e_cell_with_realsense_camera
   includeDevice:
     computationDevice:
-      - name: cmh_tower_400
+      - name: my_powerful_pc
         refDeviceType: PC
         configDeviceProperty:
           - name: "os_name"
@@ -69,7 +69,7 @@ TargetDeployEnviroment:
               refConnectionProperty: "UR5E.ethernet.dns_server"
               value:
                 - "0.0.0.0"
-        - refDevice: cmh_tower_400
+        - refDevice: my_powerful_pc
           refConnection: "PC.ethernet"
           configuration:
             - name: pc_ip
@@ -97,7 +97,7 @@ TargetDeployEnviroment:
 
     - name: connect_pc_camera
       connectDevice:
-        - refDevice: cmh_tower_400
+        - refDevice: my_powerful_pc
           refConnection: "PC.usb_01"
           configuration:
             - name: "camera_realsense_device_volume"
