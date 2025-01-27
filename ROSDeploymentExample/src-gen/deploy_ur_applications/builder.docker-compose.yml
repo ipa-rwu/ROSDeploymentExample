@@ -1,0 +1,73 @@
+version: "3"
+
+services:
+  bt_framework:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/bt_framework_humble:50y_v1.0.1
+    build:
+      context: "./bt_framework/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        ROSINSTALL_CI_JOB_TOKEN: true
+        CI_JOB_TOKEN: # Please define CI_JOB_TOKEN that can access the following repos: [https://gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/bt_based_application_framework.git]
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+
+  launch_realsense:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/launch_realsense_humble:50y_v1.0.1
+    build:
+      context: "./launch_realsense/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+
+  aruco_marker_publish:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/aruco_marker_publish_humble:50y_v1.0.1
+    build:
+      context: "./aruco_marker_publish/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+
+  ur_driver:
+    image: registry.gitlab.cc-asp.fraunhofer.de/ipa326/demonstrator/50y-robotic-demo/ur_driver_humble:50y_v1.0.1
+    build:
+      context: "./ur_driver/"
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        BASE_IMAGE: public.ecr.aws/docker/library/ros:humble-ros-core
+        CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+        BUILDER_SUFFIX: ":0.0.3"
+        BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+        target: install
+        SELECT_PKGS: ""
+        COLCON_OPTION: ""
+    stdin_open: true
+    tty: true
+

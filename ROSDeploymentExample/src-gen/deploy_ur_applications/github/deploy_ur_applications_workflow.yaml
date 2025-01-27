@@ -1,0 +1,72 @@
+name: deploy_ur_applications
+on:
+  push:
+    paths:
+      - "src-gen/deploy_ur_applications/**"
+env:
+  BUILDER_PREFIX: "ghcr.io/ipa-rwu/"
+  BUILDER_SUFFIX: ":latest"
+  CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Release"
+  REGISTRY: ghcr.io
+
+jobs:
+  EnvSetup:
+    runs-on: ubuntu-latest
+    name: Setup Dynamic Environment Variables
+    outputs:
+      registry: ${{ steps.set-output-defaults.outputs.registry }}
+      build-prefix: ${{ steps.set-output-defaults.outputs.build-prefix }}
+      build-suffix: ${{ steps.set-output-defaults.outputs.build-suffix }}
+      cmake-args: ${{ steps.set-output-defaults.outputs.cmake-args }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |
+          echo "registry=$REGISTRY" >> $GITHUB_OUTPUT
+          echo "build-prefix=$BUILDER_PREFIX" >> $GITHUB_OUTPUT
+          echo "build-suffix=$BUILDER_SUFFIX" >> $GITHUB_OUTPUT
+          echo "cmake-args=$CMAKE_ARGS" >> $GITHUB_OUTPUT
+  bt_framework:
+    needs: [EnvSetup]
+    uses: ./.github/workflows/test_code_build_image_workflow_reuse.yaml
+    with:
+      context-path: src-gen/deploy_ur_applications/bt_framework
+      ros-distro: humble
+      registry: ${{needs.EnvSetup.outputs.registry}}
+      image-name: ${{ github.repository_owner }}/bt_framework
+      build-prefix: ${{needs.EnvSetup.outputs.build-prefix}}
+      build-suffix: ${{needs.EnvSetup.outputs.build-suffix}}
+      cmake-args: ${{needs.EnvSetup.outputs.cmake-args}}
+  launch_realsense:
+    needs: [EnvSetup]
+    uses: ./.github/workflows/test_code_build_image_workflow_reuse.yaml
+    with:
+      context-path: src-gen/deploy_ur_applications/launch_realsense
+      ros-distro: humble
+      registry: ${{needs.EnvSetup.outputs.registry}}
+      image-name: ${{ github.repository_owner }}/launch_realsense
+      build-prefix: ${{needs.EnvSetup.outputs.build-prefix}}
+      build-suffix: ${{needs.EnvSetup.outputs.build-suffix}}
+      cmake-args: ${{needs.EnvSetup.outputs.cmake-args}}
+  aruco_marker_publish:
+    needs: [EnvSetup]
+    uses: ./.github/workflows/test_code_build_image_workflow_reuse.yaml
+    with:
+      context-path: src-gen/deploy_ur_applications/aruco_marker_publish
+      ros-distro: humble
+      registry: ${{needs.EnvSetup.outputs.registry}}
+      image-name: ${{ github.repository_owner }}/aruco_marker_publish
+      build-prefix: ${{needs.EnvSetup.outputs.build-prefix}}
+      build-suffix: ${{needs.EnvSetup.outputs.build-suffix}}
+      cmake-args: ${{needs.EnvSetup.outputs.cmake-args}}
+  ur_driver:
+    needs: [EnvSetup]
+    uses: ./.github/workflows/test_code_build_image_workflow_reuse.yaml
+    with:
+      context-path: src-gen/deploy_ur_applications/ur_driver
+      ros-distro: humble
+      registry: ${{needs.EnvSetup.outputs.registry}}
+      image-name: ${{ github.repository_owner }}/ur_driver
+      build-prefix: ${{needs.EnvSetup.outputs.build-prefix}}
+      build-suffix: ${{needs.EnvSetup.outputs.build-suffix}}
+      cmake-args: ${{needs.EnvSetup.outputs.cmake-args}}

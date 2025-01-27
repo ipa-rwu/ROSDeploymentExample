@@ -65,7 +65,7 @@ source install/setup.bash
 To execute the launch file, the following command can be called:
 
 ```
-ros2 launch ur_applications ur_applications.launch.py lifcyclenode_manager/node_sequence:=[moveit_config_server, bt_operator, ur_io_control_gripper_skill_server, moveit_skill_server] bt_operator/customized_plugin_lib_names.ur_robot_skill_clients:=[io_control_gripper, get_ur_robot_state, get_ur_safety_state, get_ur_program_state, check_safety_mode, check_robot_mode, is_robot_running, is_safety_normal, is_program_running] bt_operator/default_plugin_lib_names:=[util_plugin_print_value] moveit_config_server/robot_name:=ur5e_workcell moveit_config_server/moveit_config_pkg:=ur5e_cell_moveit_config 
+ros2 launch ur_applications ur_applications.launch.py 
 ```
 
 The generated launch files requires the xterm package, it can be installed by:

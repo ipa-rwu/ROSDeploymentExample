@@ -1,0 +1,4 @@
+repositories:
+  realsense_camera_calibrated:
+    type: git
+    url: https://github.com/ipa-rwu/realsense_camera_calibrated.git

@@ -1,0 +1,10 @@
+- name: deploy_ur_applications_my_powerful_pc
+  hosts: my_powerful_pc
+  vars:
+    docker_compose_dir: my_powerful_pc
+    ori_docker_compose_dir_path: "../{{ docker_compose_dir }}"
+    dest_docker_compose_dir_path: "/home/{{ ansible_user }}/AutoDeployment/deploy_ur_applications/{{ docker_compose_dir }}"
+    ansible_become_pass: "{{ my_powerful_pc_sudo }}"
+  roles:
+    - common
+    - start_application
